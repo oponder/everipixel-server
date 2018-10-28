@@ -1,0 +1,20 @@
+{
+  "name": "everipixel-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@feathersjs/express": "^1.2.7",
+    "@feathersjs/feathers": "^3.2.3",
+    "evtjs": "^4.4.4",
+    "feathers-logger": "^0.3.2",
+    "loglevel": "^1.6.1",
+    "morgan": "^1.9.1"
+  }
+}
