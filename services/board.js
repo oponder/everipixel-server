@@ -2,6 +2,9 @@ class BoardService {
   constructor(params) {
     this.EVTWrapper = params.EVTWrapper;
     this.domain = params.domain;
+    this.width = params.width;
+    this.height = params.height;
+    this.pixelCount = params.width * params.height;
     this.board = [];
     this.events = ['status'];
   }
@@ -12,7 +15,7 @@ class BoardService {
     var response = null;
     var x;
 
-    for (x = 0; x < 2500; x++) {
+    for (x = 0; x < this.pixelCount; x++) {
       let {err, response} = await this.EVTWrapper.getToken(this.domain, x.toString());
       if (response && response.metas) {
         let colorMetas = response.metas

@@ -8,15 +8,14 @@ const ClaimService = require('./services/claim');
 const BoardService = require('./services/board');
 const EVTWrapper = require('./lib/evt');
 
-let domain = "pixeltoken";
-let width = 50;
-let height = 50;
-
 let feathersApp = feathers().configure(configuration());
 let app = express(feathersApp);
 let privateKey = feathersApp.get('privateKey');
 let port = feathersApp.get('port');
 let host = feathersApp.get('host');
+let domain = feathersApp.get('domain');
+let width = feathersApp.get('canvasWidth');
+let height = feathersApp.get('canvasHeight');
 
 
 // Enable CORS
@@ -29,7 +28,7 @@ app.use(function(req, res, next) {
 // Create the board service.
 let boardService = new BoardService({
   EVTWrapper: new EVTWrapper({privateKey}),
-  domain
+  domain, width, height
 });
 
 // Create the claim service.
@@ -79,5 +78,9 @@ async function startServer() {
 }
 
 console.log('\nEveripixel REST API starting at http://'+host+':'+port);
-console.log('Domain:', domain);
+console.log('--------------------------------------------------------');
+console.log('Canvas Size: ', width, "x", height);
+console.log('Token Domain:', domain);
+console.log('--------------------------------------------------------\n');
+
 startServer();
