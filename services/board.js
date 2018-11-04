@@ -38,6 +38,7 @@ class BoardService {
       } else {
         this.board.push(null);
       }
+      console.log(x);
     }
 
     return {err, response};

@@ -19,16 +19,17 @@ let host = feathersApp.get('host');
 let domain = feathersApp.get('domain');
 let width = feathersApp.get('canvasWidth');
 let height = feathersApp.get('canvasHeight');
+let evtNetwork = feathersApp.get('evtNetwork');
 
 // Create the board service.
 let boardService = new BoardService({
-  EVTWrapper: new EVTWrapper({privateKey}),
+  EVTWrapper: new EVTWrapper({privateKey, evtNetwork}),
   domain, width, height
 });
 
 // Create the claim service.
 let claimService = new ClaimService({
-  EVTWrapper: new EVTWrapper({privateKey}),
+  EVTWrapper: new EVTWrapper({privateKey, evtNetwork}),
   domain
 });
 
@@ -89,6 +90,7 @@ console.log('\nEveripixel REST API starting at http://'+host+':'+port);
 console.log('--------------------------------------------------------');
 console.log('Canvas Size: ', width, "x", height);
 console.log('Token Domain:', domain);
+console.log('EVT Network:', evtNetwork);
 console.log('--------------------------------------------------------\n');
 
 startServer();
