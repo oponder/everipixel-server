@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["build", "-t", "gcr.io/everipixel/everipixel-server", "."]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/everipixel/everipixel-server"]
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - set
+  - image
+  - deployment
+  - everipixel-server
+  - everipixel-server=gcr.io/everipixel/everipixel-server:[TAG]
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-southeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=production-1'
