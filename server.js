@@ -1,4 +1,5 @@
 const feathers = require('@feathersjs/feathers');
+const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 
@@ -7,13 +8,16 @@ const ClaimService = require('./services/claim');
 const BoardService = require('./services/board');
 const EVTWrapper = require('./lib/evt');
 
-let publicKey = "EVT5mdMnhhJdRmsebtY36DC2Pawqy79D8ojrVwGtAf9zcjMfiN18f";
-let privateKey = "5K4jQMfiV5PqJqiXmGc2p4QqGgmt3RN5Jew3Bqs38VwG47Vbwzb";
 let domain = "pixeltoken";
 let width = 50;
 let height = 50;
 
-let app = express(feathers());
+let feathersApp = feathers().configure(configuration());
+let app = express(feathersApp);
+let privateKey = feathersApp.get('privateKey');
+let port = feathersApp.get('port');
+let host = feathersApp.get('host');
+
 
 // Enable CORS
 app.use(function(req, res, next) {
@@ -24,13 +28,13 @@ app.use(function(req, res, next) {
 
 // Create the board service.
 let boardService = new BoardService({
-  EVTWrapper: new EVTWrapper({publicKey, privateKey}),
+  EVTWrapper: new EVTWrapper({privateKey}),
   domain
 });
 
 // Create the claim service.
 let claimService = new ClaimService({
-  EVTWrapper: new EVTWrapper({publicKey, privateKey}),
+  EVTWrapper: new EVTWrapper({privateKey}),
   domain
 });
 
@@ -48,7 +52,6 @@ app.on('connection', connection => {
   // On a new real-time connection, add it to the
   // anonymous channel
   app.channel('anonymous').join(connection);
-  console.log('hi')
 });
 
 // Publish the `created` event to admins and the user that sent it
@@ -69,11 +72,12 @@ async function startServer() {
     throw err;
   }
 
-  let server = app.listen(3030);                   // Start the server on port 3030.
+  let server = app.listen(port, host);                   // Start the server on port 3030.
   server.on('listening', () => {
-    console.log('\nEveripixel REST API started at http://localhost:3030');
-    console.log('Domain:', domain);
+    console.log('\nServer ready and listening.');
   });
 }
 
+console.log('\nEveripixel REST API starting at http://'+host+':'+port);
+console.log('Domain:', domain);
 startServer();
