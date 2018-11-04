@@ -12,6 +12,7 @@
   "dependencies": {
     "@feathersjs/express": "^1.2.7",
     "@feathersjs/feathers": "^3.2.3",
+    "@feathersjs/socketio": "^3.2.7",
     "evtjs": "^4.4.4",
     "feathers-logger": "^0.3.2",
     "loglevel": "^1.6.1",
