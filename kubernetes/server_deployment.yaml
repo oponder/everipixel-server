@@ -28,3 +28,6 @@ spec:
             secretKeyRef:
               name: everipixel-secret
               key: privatekey
+
+        - name: NODE_CONFIG
+          value: "{\"host\":\"0.0.0.0\", \"evtNetwork\":{\"host\":\"35.240.176.101\", \"port\":8888, \"protocol\":\"http\"}}"

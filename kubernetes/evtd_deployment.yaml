@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evtd
+  namespace: everipixel
+  labels:
+    app: evtd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: evtd
+  template:
+    metadata:
+      labels:
+        app: evtd
+    spec:
+      containers:
+      - name: evtd
+        image: oponder/evt
+        command:
+        - /opt/evt/bin/evtd.sh
+        - --http-validate-host=false
+        - --delete-all-blocks
+        - --enable-stale-production
+        - --hard-replay-blockchain
+        - --charge-free-mode
+        - --producer-name=evt
+
+        ports:
+        - containerPort: 8888
+        - containerPort: 9876
+
+        volumeMounts:
+        - mountPath: /opt/evt/data
+          name: evtd-data-volume
+
+      volumes:
+      - name: evtd-data-volume
+        emptyDir: {}

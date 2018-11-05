@@ -33,6 +33,13 @@ let claimService = new ClaimService({
   domain
 });
 
+// Enable CORS
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 // Configure some other middlewares.
 app.use(express.json())                          // Turn on JSON body parsing for REST services.
 app.use(express.urlencoded({ extended: true })); // Turn on URL-encoded body parsing for REST services.
@@ -41,13 +48,6 @@ app.configure(socketio());                       // Set up socketio.
 app.use(morgan('dev'));                          // Set up request logging.
 app.use('claim', claimService);                  // Hook up the claim service to the /claim endpoint.
 app.use('board', boardService);                  // Hook up the board service to the /board endpoint.
-
-// Enable CORS
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 // Subscribe users to the anonymous channel.
 app.on('connection', connection => {

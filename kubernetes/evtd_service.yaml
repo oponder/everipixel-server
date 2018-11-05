@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: evtd
+  namespace: everipixel
+  labels:
+    app: evtd
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8888
+  selector:
+    app: evtd
