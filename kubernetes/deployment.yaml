@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: everipixel-server
+  namespace: everipixel
+  labels:
+    app: everipixel-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: everipixel-server
+  template:
+    metadata:
+      labels:
+        app: everipixel-server
+    spec:
+      containers:
+      - name: everipixel-server
+        image: gcr.io/everipixel/everipixel-server
+        ports:
+        - containerPort: 8000
+
+        env:
+        - name: PRIVATEKEY
+          valueFrom:
+            secretKeyRef:
+              name: everipixel-secret
+              key: privatekey
