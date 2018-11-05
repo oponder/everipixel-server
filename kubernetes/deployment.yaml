@@ -7,6 +7,7 @@ metadata:
     app: everipixel-server
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: everipixel-server
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
       - name: everipixel-server
-        image: gcr.io/everipixel/everipixel-server
+        image: gcr.io/everipixel/everipixel-server:latest
         ports:
         - containerPort: 8000
 
