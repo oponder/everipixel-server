@@ -14,9 +14,8 @@ class ClaimService {
     return {err, response};
   }
 
-  async create(data, params) {
-    console.log(data);
-    let {err, response} = await this.EVTWrapper.issueNonFungible(this.domain, data.id, data.owner)
+  async create(data) {
+    let {err, response} = await this.EVTWrapper.issueNonFungible("pixeltoken", data.id, data.owner)
     if (err != null) {
       throw err;
     }
